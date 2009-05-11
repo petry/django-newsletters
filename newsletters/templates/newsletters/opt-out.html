@@ -1,0 +1,22 @@
+{% load i18n %}
+
+{% blocktrans with site.name as site_name %}
+Dear subscriber,
+
+Thank you for your subscription on {{ site_name }} !
+
+Please confirm your unsubscription by following this link:
+{% endblocktrans %}
+
+http://{{ site.domain }}{% url subscription-deactivate deactivation_key %}
+
+{% blocktrans %}
+Your email : {{ email }}
+
+If you didn't unsubscribe from this site, please ignore this email.
+{% endblocktrans %}
+
+{% blocktrans with site.name as site_name %}
+Thanks,
+{{ site_name }} Team
+{% endblocktrans %}
