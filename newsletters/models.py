@@ -18,7 +18,7 @@ class SubscriptionBase(models.Model):
     date_joined = models.DateTimeField(_("created on"), auto_now_add=True)
     
     objects = models.Manager()
-    subscribed = SubscriptionBaseSubscribedManager()
+    active = SubscriptionBaseSubscribedManager()
     
     class Meta:
         abstract = True
