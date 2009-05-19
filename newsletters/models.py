@@ -3,6 +3,10 @@ from django.utils.translation import ugettext_lazy as _, ugettext
 from newsletters import settings
 import random, re, sha, datetime
 
+class SubscriptionBaseSubscribedManager(models.Manager):
+    def get_query_set(self):
+        return super(SubscriptionBaseSubscribedManager, self).get_query_set().filter(subscribed=1)
+
 class SubscriptionBase(models.Model):
     '''
     Abstract base class for newsletter subsription.
@@ -12,6 +16,9 @@ class SubscriptionBase(models.Model):
     email = models.EmailField(_('email'))
     subscribed = models.BooleanField(_('subscribed'), default=True)
     date_joined = models.DateTimeField(_("created on"), auto_now_add=True)
+    
+    objects = models.Manager()
+    subscribed = SubscriptionBaseSubscribedManager()
     
     class Meta:
         abstract = True
