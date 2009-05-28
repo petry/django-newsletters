@@ -60,17 +60,17 @@ class SubscriptionOptInMananger(models.Manager):
         # SHA1 hash; if it doesn't, no point trying to look it up in
         # the database.
         if SHA1_RE.search(activation_key):
-            try:
-                subscription = self.get(activation_key=activation_key)
-            except self.model.DoesNotExist:
+            subscriptions = self.filter(activation_key=activation_key)
+            if len(subscriptions) == 0:
                 return False
-            if not subscription.activation_key_expired():
-                subscription.subscribed = True
-                subscription.save()
-                return subscription
+            for subscription in subscriptions:
+                if not subscription.activation_key_expired():
+                    subscription.subscribed = True
+                    subscription.save()
+            return subscriptions
         return False
     
-    def create_inactive_subscription(self, instance, email_template='newsletters/opt-in.html', send_email=True):
+    def create_inactive_subscription(self, instance, email_template='newsletters/opt-in.html', send_email=True, activation_key=None):
         """
         Creates a new, inactive Subscription, generates a
         Subscription and emails its activation key to the
@@ -78,8 +78,9 @@ class SubscriptionOptInMananger(models.Manager):
 
         To disable the email, call with send_email=False.
         """
-        salt = sha.new(str(random.random())).hexdigest()[:5]
-        activation_key = sha.new(salt+instance.email).hexdigest()[:16]
+        if not activation_key:
+            salt = sha.new(str(random.random())).hexdigest()[:5]
+            activation_key = sha.new(salt+instance.email).hexdigest()[:16]
         
         instance.activation_key = activation_key
         instance.subscribed = False
