@@ -41,6 +41,8 @@ class SubscriptionTest(TestCase):
 
 
     def test_subscription_add_an_email(self):
+        self.assertEqual(Subscription.objects.count(), 0)
+
         response = self.client.post(reverse('subscribe'),
                                     data={'email':'test@test.com'})
         self.assertEqual(Subscription.objects.count(), 1)
@@ -50,6 +52,5 @@ class SubscriptionTest(TestCase):
         Subscription.objects.create(email="test@test.com")
         response = self.client.post(reverse('subscribe'),
                                         data={'email':'test@test.com'})
-
         form = response.context['form']
         self.assertEqual(form.errors['email'], [u'E-mail already registered'])
