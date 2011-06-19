@@ -48,9 +48,19 @@ class SubscriptionTest(TestCase):
         self.assertEqual(Subscription.objects.count(), 1)
 
 
+    def test_unsubscription_remove_email(self):
+        Subscription.objects.create(email="test@test.com")
+
+        response = self.client.post(reverse('unsubscribe'),
+                                    data={'email':'test@test.com'})
+
+        self.assertEqual(Subscription.objects.count(), 0)
+
+
     def test_only_one_email_are_bubscribed(self):
         Subscription.objects.create(email="test@test.com")
         response = self.client.post(reverse('subscribe'),
                                         data={'email':'test@test.com'})
         form = response.context['form']
         self.assertEqual(form.errors['email'], [u'E-mail already registered'])
+
