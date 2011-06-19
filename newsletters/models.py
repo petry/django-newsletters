@@ -235,3 +235,14 @@ class SubscriptionOptIn(SubscriptionOptInBase):
     Generic opt-in subscription
     '''
     pass
+
+class Newsletter(models.Model):
+    title = models.CharField(max_length=200, verbose_name=_('title'))
+    slug = models.SlugField(db_index=True, unique=True)
+
+    template = models.CharField(max_length=255, verbose_name=_('template'))
+
+    body = models.TextField(verbose_name=_('body message'))
+
+    date_sent = models.DateTimeField(null=True, blank=True)
+
