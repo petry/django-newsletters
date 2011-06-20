@@ -110,6 +110,11 @@ class AdminViewsTests(TestCase):
     def test_change_view_has_send_button(self):
         view = reverse('admin:newsletters_newsletter_change', args=[self.newsletter.pk,])
         response = self.client.get(view)
-        import ipdb; ipdb.set_trace()
         self.assertTrue('sendlink' in response.content)
+
+    def test_send_mail_works(self):
+
+        response = self.client.get('/admin/newsletters/newsletter/1/send_mail/')
+        self.assertEquals(response.status_code, 200)
+
 
