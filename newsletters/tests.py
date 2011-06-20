@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase
 from django.test.client import Client
-from newsletters.models import Subscription
+from newsletters.models import Subscription, Newsletter
 
 class RequestTest(TestCase):
     def setUp(self):
@@ -63,4 +63,53 @@ class SubscriptionTest(TestCase):
                                         data={'email':'test@test.com'})
         form = response.context['form']
         self.assertEqual(form.errors['email'], [u'E-mail already registered'])
+
+
+from newsletters.forms import NewsletterForm
+
+class NewsletterFormTest(TestCase):
+    def test_newsletter_with_invalid_template_dit_not_work(self):
+        data = dict(
+            title = 'fake-title',
+            slug = 'fake-slug',
+            template = 'fake-template',
+            body = 'fake-body'
+        )
+
+        form = NewsletterForm(data)
+        self.assertFalse(form.is_valid())
+
+
+    def test_newsletter_with_valid_template_works(self):
+        data = dict(
+            title = 'fake-title',
+            slug = 'fake-slug',
+            template = 'newsletters/newsletter_template.html',
+            body = 'fake-body'
+        )
+
+        form = NewsletterForm(data)
+        self.assertTrue(form.is_valid(), form.errors)
+
+
+class AdminViewsTests(TestCase):
+    fixtures = ['test_auth.json']
+
+
+    def setUp(self):
+        self.newsletter = Newsletter.objects.create(
+            title = 'fake-title',
+            slug = 'fake-slug',
+            template = 'newsletters/newsletter_template.html',
+            body = 'fake-body'
+        )
+        self.client = Client()
+        self.client.login(username='testclient', password='password')
+
+
+    def test_change_view_has_send_button(self):
+        view = reverse('admin:newsletters_newsletter_change', args=[self.newsletter.pk,])
+        response = self.client.get(view)
+        import ipdb; ipdb.set_trace()
+        self.assertTrue('sendlink' in response.content)
 

@@ -1,6 +1,9 @@
 from django import forms
-from newsletters.models import Subscription, SubscriptionOptIn
+from django.template.base import TemplateDoesNotExist
+from newsletters.models import Subscription, SubscriptionOptIn, Newsletter
 from django.utils.translation import ugettext_lazy as _
+from django.template.loader import render_to_string
+
 
 class SubscriptionForm(forms.ModelForm):
     
@@ -49,3 +52,16 @@ class UnsubscriptionOptInForm(UnsubscriptionForm):
     class Meta:
         model = SubscriptionOptIn
         fields = ('email',)
+
+
+class NewsletterForm(forms.ModelForm):
+    class Meta:
+        model = Newsletter
+
+    def clean_template(self):
+        if self.cleaned_data.has_key('template') and self.cleaned_data['template']:
+            try:
+                render_to_string(self.cleaned_data['template'])
+            except TemplateDoesNotExist:
+                raise forms.ValidationError(_(u'This template doesn\'t exist'))
+        return self.cleaned_data['template']

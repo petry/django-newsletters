@@ -9,7 +9,7 @@ class SubscriptionBaseSubscribedManager(models.Manager):
 
 class SubscriptionBase(models.Model):
     '''
-    Abstract base class for newsletter subsription.
+    Abstract base class for newsletters subsription.
     
     This class 
     '''
@@ -201,7 +201,7 @@ class SubscriptionOptInMananger(models.Manager):
 
 class SubscriptionOptInBase(SubscriptionBase):
     '''
-    Abstract base class for Opt-in/Opt-out subscription newsletter
+    Abstract base class for Opt-in/Opt-out subscription newsletters
     '''
     activation_key = models.CharField(_('activation key'), max_length=16)
     
@@ -239,10 +239,9 @@ class SubscriptionOptIn(SubscriptionOptInBase):
 class Newsletter(models.Model):
     title = models.CharField(max_length=200, verbose_name=_('title'))
     slug = models.SlugField(db_index=True, unique=True)
-
-    template = models.CharField(max_length=255, verbose_name=_('template'))
-
+    template = models.CharField(max_length=255, verbose_name=_('template'),
+                                null=True, blank=True, default='newsletters/newsletter_template.html')
     body = models.TextField(verbose_name=_('body message'))
-
-    date_sent = models.DateTimeField(null=True, blank=True)
+    sent_date = models.DateTimeField(null=True, blank=True, auto_now=True, editable=False)
+    
 
