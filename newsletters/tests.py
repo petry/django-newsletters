@@ -112,9 +112,18 @@ class AdminViewsTests(TestCase):
         response = self.client.get(view)
         self.assertTrue('sendlink' in response.content)
 
-    def test_send_mail_works(self):
-
+    def test_send_mail_view_works(self):
         response = self.client.get('/admin/newsletters/newsletter/1/send_mail/')
         self.assertEquals(response.status_code, 200)
 
+    def test_send_mail_view_has_subscribers_list(self):
+        Subscription.objects.create(email="test@test.com")
+        response = self.client.get('/admin/newsletters/newsletter/1/send_mail/')
+        self.assertTrue(response.context['subscribers'])
 
+
+    def test_redirect_to_list_on_post_send_mail_view(self):
+        response = self.client.post('/admin/newsletters/newsletter/1/send_mail/',
+                                    data={'action':'send_mail'})
+        self.assertRedirects(response=response,
+            expected_url=reverse('admin:newsletters_newsletter_changelist') )

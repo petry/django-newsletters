@@ -1,8 +1,24 @@
 {% extends "admin/change_form.html" %}
 {% load i18n %}
 
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+     <a href="../../../../">{% trans "Home" %}</a> &rsaquo;
+     <a href="../../../">{{ app_label|capfirst }}</a> &rsaquo;
+     <a href="../../">{{ opts.verbose_name_plural|capfirst }}</a> &rsaquo;
+     <a href="../">{{ object|truncatewords:"18" }}</a> &rsaquo;
+     {% trans 'Send Mail' %}
+</div>
+{% endblock %}
+
 {% block content %}
-    <div id="content-main">
-        Send Mail view
-    </div>
+    <p id="content-main">
+        Send newsletter to {{ subscribers.count }} emails?
+    </p>
+    <form action="" method="post">{% csrf_token %}
+        <div>
+            <input type="hidden" name="action" value="send_mail" />
+            <input type="submit" value="{% trans "Yes, I'm sure" %}" />
+        </div>
+    </form>
 {% endblock %}

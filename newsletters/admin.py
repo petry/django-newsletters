@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf.urls.defaults import patterns, url
 from django.contrib import admin
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from newsletters.forms import NewsletterForm
@@ -25,7 +27,15 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 
     def send_mail(self, request, newsletter_id):
-        
+        if request.method == 'POST':
+            self.message_user(request, u"Newsletter sent successfully")
+            return HttpResponseRedirect(reverse('admin:newsletters_newsletter_changelist'))
+        subscribers = Subscription.objects.filter(subscribed=True)
+        opts = Newsletter._meta
+        app_label = opts.app_label
+        object = Newsletter.objects.get(id=newsletter_id)
+
+
 
         return render_to_response('admin/newsletters/send_mail.html',
                                   locals(),
