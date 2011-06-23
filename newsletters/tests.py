@@ -116,10 +116,17 @@ class AdminViewsTests(TestCase):
         response = self.client.get('/admin/newsletters/newsletter/1/send_mail/')
         self.assertEquals(response.status_code, 200)
 
+    def test_send_mail_view_has_nresletter_object(self):
+        Subscription.objects.create(email="test@test.com")
+        response = self.client.get('/admin/newsletters/newsletter/1/send_mail/')
+        newsletter = response.context['object']
+        self.assertEqual(newsletter.title, 'fake-title')
+
     def test_send_mail_view_has_subscribers_list(self):
         Subscription.objects.create(email="test@test.com")
         response = self.client.get('/admin/newsletters/newsletter/1/send_mail/')
-        self.assertTrue(response.context['subscribers'])
+        subscription_list = [s.email for s in response.context['subscribers']]
+        self.assertTrue('test@test.com' in subscription_list)
 
 
     def test_redirect_to_list_on_post_send_mail_view(self):

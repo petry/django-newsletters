@@ -12,9 +12,26 @@
 {% endblock %}
 
 {% block content %}
-    <p id="content-main">
-        Send newsletter to {{ subscribers.count }} emails?
+    <h1>
+        Send this newsletter to {{ subscribers.count }} emails?
+    </h1>
+    <p>
+        This is the email that be sent to your subscribers:
     </p>
+
+    <fieldset class="module aligned">
+        <div class="form-row title">
+            <div>
+                <label>Título:</label>
+                <p>{{ object.title }}</p>
+            </div>
+            <div>
+                <label>Email:</label>
+                <p>{{ object.body|linebreaks }}</p>
+            </div>
+        </div>
+    </fieldset>
+
     <form action="" method="post">{% csrf_token %}
         <div>
             <input type="hidden" name="action" value="send_mail" />

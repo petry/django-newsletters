@@ -11,6 +11,7 @@ from newsletters.models import Subscription, Newsletter
 
 class NewsletterAdmin(admin.ModelAdmin):
     form = NewsletterForm
+    readonly_fields = ('title',)
 
 
     def get_urls(self):
