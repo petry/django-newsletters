@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from django.conf.urls.defaults import patterns, url
 from django.contrib import admin
 from django.core.urlresolvers import reverse
@@ -7,11 +8,19 @@ from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from newsletters.forms import NewsletterForm
 from newsletters.models import Subscription, Newsletter
+from django.utils.translation import ugettext_lazy as _
+
+
+class  SubscriptionAdmin(admin.ModelAdmin):
+    list_display = ('email', 'subscribed')
+
 
 
 class NewsletterAdmin(admin.ModelAdmin):
     form = NewsletterForm
-    readonly_fields = ('title',)
+    list_display = ('title', 'sent_date')
+    prepopulated_fields = {'slug': ('title',)}
+
 
 
     def get_urls(self):
@@ -28,13 +37,16 @@ class NewsletterAdmin(admin.ModelAdmin):
 
 
     def send_mail(self, request, newsletter_id):
+        object = Newsletter.objects.get(id=newsletter_id)
+
         if request.method == 'POST':
-            self.message_user(request, u"Newsletter sent successfully")
+            object.sent_date = datetime.now()
+            object.save()
+            self.message_user(request, _(u"Newsletter sent successfully"))
             return HttpResponseRedirect(reverse('admin:newsletters_newsletter_changelist'))
         subscribers = Subscription.objects.filter(subscribed=True)
         opts = Newsletter._meta
         app_label = opts.app_label
-        object = Newsletter.objects.get(id=newsletter_id)
 
 
 
@@ -43,4 +55,4 @@ class NewsletterAdmin(admin.ModelAdmin):
                                   RequestContext(request))
 
 admin.site.register(Newsletter, NewsletterAdmin)
-admin.site.register(Subscription)
+admin.site.register(Subscription, SubscriptionAdmin)

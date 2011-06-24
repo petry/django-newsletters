@@ -1,0 +1,230 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2011-06-24 12:42-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
+
+#: admin.py:34
+msgid "Newsletter sent successfully"
+msgstr "Newsletter enviada com sucesso"
+
+#: forms.py:13
+msgid "E-mail already registered"
+msgstr "Este email já foi registrado"
+
+#: forms.py:34
+msgid "E-mail not found"
+msgstr "E-mail não encontrado"
+
+#: forms.py:42
+msgid "E-mail not registered"
+msgstr "E-mail não registrado"
+
+#: forms.py:66
+msgid "This template doesn't exist"
+msgstr "Este template não existe"
+
+#: models.py:16
+msgid "email"
+msgstr "email"
+
+#: models.py:17
+msgid "subscribed"
+msgstr "instrito"
+
+#: models.py:18
+msgid "created on"
+msgstr "criado em"
+
+#: models.py:96
+#, python-format
+msgid "Confirm your subscription to %s"
+msgstr "Confirmar instrição para %s"
+
+#: models.py:153
+#, python-format
+msgid "Confirm your unsubscription to %s"
+msgstr "Confirmar remoção para %s"
+
+#: models.py:206
+msgid "activation key"
+msgstr "chave de ativação"
+
+#: models.py:234
+msgid "Subscription"
+msgstr "Inscrição"
+
+#: models.py:235
+msgid "Subscriptions"
+msgstr "Inscrições"
+
+#: models.py:245
+msgid "title"
+msgstr "título"
+
+#: models.py:247
+msgid "template"
+msgstr "modelo"
+
+#: models.py:249
+msgid "body message"
+msgstr "corpo da mensagem"
+
+#: templates/admin/newsletters/change_form.html:8
+msgid "History"
+msgstr "Histórico"
+
+#: templates/admin/newsletters/change_form.html:9
+msgid "View on site"
+msgstr "Ver no site"
+
+#: templates/admin/newsletters/change_form.html:10
+msgid "send mail"
+msgstr "enviar email"
+
+#: templates/admin/newsletters/send_mail.html:6
+msgid "Home"
+msgstr "Início"
+
+#: templates/admin/newsletters/send_mail.html:10
+msgid "Send Mail"
+msgstr "Enviar Email"
+
+#: templates/admin/newsletters/send_mail.html:16
+#, python-format
+msgid "Send this newsletter to %(subscribers.count)s emails?"
+msgstr "Enviar a newsletter para %(subscribers.count)s emails?"
+
+#: templates/admin/newsletters/send_mail.html:19
+msgid "This is the email that be sent to your subscribers:"
+msgstr "Este é o email que será enviado aos inscritos"
+
+#: templates/admin/newsletters/send_mail.html:25
+msgid "Title"
+msgstr "Título"
+
+#: templates/admin/newsletters/send_mail.html:29
+msgid "Email"
+msgstr ""
+
+#: templates/admin/newsletters/send_mail.html:38
+msgid "Send Email"
+msgstr "Enviar Email"
+
+#: templates/newsletters/opt-in.html:3
+#, python-format
+msgid ""
+"\n"
+"Dear subscriber,\n"
+"\n"
+"Thank you for your subscription on %(site_name)s !\n"
+"\n"
+"Please confirm your subscription by following this link in the next "
+"%(expiration_days)s days:\n"
+msgstr ""
+"\n"
+"Caro assinante, \n"
+"\n"
+"Obrigado por sua inscrição no site %(site_name)s !\n"
+"\n"
+"Por favor, confirme sua inscrição, em até%(expiration_days)s dias:\n"
+
+#: templates/newsletters/opt-in.html:13
+#, python-format
+msgid ""
+"\n"
+"Your email : %(email)s\n"
+"\n"
+"If you didn't subscribe on this site, please ignore this email.\n"
+msgstr ""
+"\n"
+"Seu email : %(email)s\n"
+"\n"
+"Se você não se inscreveu neste site, por favor, ignore este email.\n"
+
+#: templates/newsletters/opt-in.html:19 templates/newsletters/opt-out.html:19
+#, python-format
+msgid ""
+"\n"
+"Thanks,\n"
+"%(site_name)s Team\n"
+msgstr ""
+"\n"
+"Obrigado,\n"
+"%(site_name)s \n"
+
+#: templates/newsletters/opt-in_error.html:2
+msgid "Opt-in Error"
+msgstr ""
+
+#: templates/newsletters/opt-in_success.html:2
+msgid "Opt-in Success"
+msgstr ""
+
+#: templates/newsletters/opt-out.html:3
+#, python-format
+msgid ""
+"\n"
+"Dear subscriber,\n"
+"\n"
+"Thank you for your subscription on %(site_name)s !\n"
+"\n"
+"Please confirm your unsubscription by following this link:\n"
+msgstr ""
+"\n"
+"Caro assinante,\n"
+"\n"
+"Obrigado pela sua inscrição no site %(site_name)s !\n"
+"\n"
+"Por Favor, confirme a sua saida no link abaixo:\n"
+
+#: templates/newsletters/opt-out.html:13
+#, python-format
+msgid ""
+"\n"
+"Your email : %(email)s\n"
+"\n"
+"If you didn't unsubscribe from this site, please ignore this email.\n"
+msgstr ""
+"\n"
+"Seu email: %(email)s\n"
+"\n"
+"Se Você não uer sair da nossa lista, ignore este email.\n"
+
+#: templates/newsletters/opt-out_error.html:2
+msgid "Opt-out Error"
+msgstr ""
+
+#: templates/newsletters/opt-out_success.html:2
+msgid "Opt-out Success"
+msgstr ""
+
+#: templates/newsletters/subscribe.html:5
+msgid "Subscribe"
+msgstr "Inscrição"
+
+#: templates/newsletters/subscribe_success.html:2
+msgid "Subscribe Success"
+msgstr "Inscrição feita com sucesso"
+
+#: templates/newsletters/unsubscribe.html:5
+msgid "Unsubscribe"
+msgstr "Sair da Lista"
+
+#: templates/newsletters/unsubscribe_success.html:2
+msgid "Unsubscribe Success"
+msgstr "Saída confirmada"

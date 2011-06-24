@@ -13,20 +13,20 @@
 
 {% block content %}
     <h1>
-        Send this newsletter to {{ subscribers.count }} emails?
+        {% blocktrans %}Send this newsletter to {{ subscribers.count }} emails?{% endblocktrans %}
     </h1>
     <p>
-        This is the email that be sent to your subscribers:
+        {% trans "This is the email that be sent to your subscribers:"%}
     </p>
 
     <fieldset class="module aligned">
         <div class="form-row title">
             <div>
-                <label>Título:</label>
+                <label>{% trans "Title" %}:</label>
                 <p>{{ object.title }}</p>
             </div>
             <div>
-                <label>Email:</label>
+                <label>{% trans "Email" %}:</label>
                 <p>{{ object.body|linebreaks }}</p>
             </div>
         </div>
@@ -35,7 +35,7 @@
     <form action="" method="post">{% csrf_token %}
         <div>
             <input type="hidden" name="action" value="send_mail" />
-            <input type="submit" value="{% trans "Yes, I'm sure" %}" />
+            <input type="submit" value="{% trans "Send Email" %}" />
         </div>
     </form>
 {% endblock %}

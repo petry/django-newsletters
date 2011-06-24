@@ -209,6 +209,7 @@ class SubscriptionOptInBase(SubscriptionBase):
     
     class Meta:
         abstract = True
+
     
     def activation_key_expired(self):
         """
@@ -228,7 +229,11 @@ class Subscription(SubscriptionBase):
     '''
     Generic subscription
     '''
-    pass
+
+    class Meta:
+        verbose_name = _(u"Subscription")
+        verbose_name_plural = _(u"Subscriptions")
+
 
 class SubscriptionOptIn(SubscriptionOptInBase):
     '''
@@ -242,6 +247,9 @@ class Newsletter(models.Model):
     template = models.CharField(max_length=255, verbose_name=_('template'),
                                 null=True, blank=True, default='newsletters/newsletter_template.html')
     body = models.TextField(verbose_name=_('body message'))
-    sent_date = models.DateTimeField(null=True, blank=True, auto_now=True, editable=False)
+    sent_date = models.DateTimeField(null=True, blank=True, editable=False)
+
+    def __unicode__(self):
+        return self.title
     
 
