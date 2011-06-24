@@ -1,32 +1,43 @@
+#/usr/bin/env python
 import os
 from setuptools import setup, find_packages
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname)).read()
+ROOT_DIR = os.path.dirname(__file__)
+SOURCE_DIR = os.path.join(ROOT_DIR)
+
+# Dynamically calculate the version based on photologue.VERSION
+version_tuple = __import__('newsletters').VERSION
+if len(version_tuple) == 3:
+    version = "%d.%d_%s" % version_tuple
+else:
+    version = "%d.%d" % version_tuple[:2]
 
 setup(
     name = "django-newletters",
-    version = "0.2",
-    url = 'https://github.com/petry/django-newsletters',
-    license = 'BSD',
-    description = "A pressroom application for django.",
-    long_description = read('README'),
-
+    version = version,
+    description = "A newsletter application for django.",
     author = 'Marcos Daniel Petry',
     author_email = 'marcospetry@gmail.com',
-
-    packages = find_packages('newsletters'),
-    package_dir = {'': 'newsletters'},
-
-    install_requires = ['setuptools', 'django-newsletters'],
+    url = 'https://github.com/petry/django-newsletters',
+    packages = find_packages(),
+    package_data = {
+        'newsletters': [
+            'bin/*',
+            'fixtures/*'
+            'locale/*/LC_MESSAGES/*',
+            'templates/newsletters/*.html',
+            'templates/admin/newsletters/*.html',
+        ]
+    },
+    zip_safe = False,
 
     classifiers = [
         'Development Status :: 4.1 - Beta',
+        'Environment :: Web Environment',
         'Framework :: Django',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
-        'Topic :: Internet :: WWW/HTTP',
-    ]
+        'Topic :: Utilities'],
 )
