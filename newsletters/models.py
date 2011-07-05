@@ -245,7 +245,7 @@ class Newsletter(models.Model):
     title = models.CharField(max_length=200, verbose_name=_('title'))
     slug = models.SlugField(db_index=True, unique=True)
     template = models.CharField(max_length=255, verbose_name=_('template'),
-                                null=True, blank=True, default='newsletters/newsletter_template.html')
+                                null=True, blank=True, default='newsletters/newsletter_template.html', editable=False)
     body = models.TextField(verbose_name=_('body message'))
     sent_date = models.DateTimeField(null=True, blank=True, editable=False)
 

@@ -2,12 +2,15 @@
 from datetime import datetime
 from django.conf.urls.defaults import patterns, url
 from django.contrib import admin
+from django.contrib.sites.models import Site
+from django.core.mail.message import EmailMessage
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template.context import RequestContext
 from newsletters.forms import NewsletterForm
 from newsletters.models import Subscription, Newsletter
+from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -39,12 +42,25 @@ class NewsletterAdmin(admin.ModelAdmin):
     def send_mail(self, request, newsletter_id):
         object = Newsletter.objects.get(id=newsletter_id)
 
+        subscribers = Subscription.objects.filter(subscribed=True)
+
+        site = Site.objects.get_current()
+        template = render_to_string(object.template, locals(), RequestContext(request))
+
         if request.method == 'POST':
             object.sent_date = datetime.now()
             object.save()
+            email = EmailMessage(subject = '%s - Prefeiruta Municipal de Feliz' % object.title,
+                                 body = template,
+                                 from_email = 'webmaster@feliz.rs.gov.br',
+                                 bcc = [e.email for e in subscribers],
+                                 headers = {'Reply-To': 'webmaster@feliz.rs.gov.br'}
+            )
+            email.content_subtype = "html"  # Main content is now text/html
+            email.send()
             self.message_user(request, _(u"Newsletter sent successfully"))
+
             return HttpResponseRedirect(reverse('admin:newsletters_newsletter_changelist'))
-        subscribers = Subscription.objects.filter(subscribed=True)
         opts = Newsletter._meta
         app_label = opts.app_label
 
