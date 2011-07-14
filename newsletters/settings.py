@@ -14,3 +14,5 @@ NEWSLETTER_ACTIVATION_DAYS = getattr(settings, 'NEWSLETTER_ACTIVATION_DAYS', 5)
 NEWSLETTER_FROM_EMAIL = getattr(settings, 'NEWSLETTER_FROM_EMAIL', None)
 if NEWSLETTER_FROM_EMAIL is None:
     raise ImproperlyConfigured('Please make sure you specified a NEWSLETTER_FROM_EMAIL setting.')
+
+NEWSLETTER_REPLYTO_EMAIL = getattr(settings, 'NEWSLETTER_REPLYTO_EMAIL', NEWSLETTER_FROM_EMAIL)
