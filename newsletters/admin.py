@@ -12,7 +12,7 @@ from newsletters.forms import NewsletterForm
 from newsletters.models import Subscription, Newsletter
 from django.template.loader import render_to_string
 from django.utils.translation import ugettext_lazy as _
-
+from django.conf import settings
 
 class  SubscriptionAdmin(admin.ModelAdmin):
     list_display = ('email', 'subscribed')
@@ -50,11 +50,11 @@ class NewsletterAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             object.sent_date = datetime.now()
             object.save()
-            email = EmailMessage(subject = '%s - Prefeiruta Municipal de Feliz' % object.title,
+            email = EmailMessage(subject = '%s - %s' % (object.title, site)
                                  body = template,
-                                 from_email = 'webmaster@feliz.rs.gov.br',
+                                 from_email = settings.NEWSLETTER_FROM_EMAIL,
                                  bcc = [e.email for e in subscribers],
-                                 headers = {'Reply-To': 'webmaster@feliz.rs.gov.br'}
+                                 headers = {'Reply-To': settings.NEWSLETTER_REPLYTO_EMAIL}
             )
             email.content_subtype = "html"  # Main content is now text/html
             email.send()
