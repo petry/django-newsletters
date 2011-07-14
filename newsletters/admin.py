@@ -50,7 +50,7 @@ class NewsletterAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             object.sent_date = datetime.now()
             object.save()
-            email = EmailMessage(subject = '%s - %s' % (object.title, site)
+            email = EmailMessage(subject = '%s - %s' % (object.title, site),
                                  body = template,
                                  from_email = settings.NEWSLETTER_FROM_EMAIL,
                                  bcc = [e.email for e in subscribers],
