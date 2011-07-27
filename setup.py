@@ -13,7 +13,7 @@ else:
     version = "%d.%d" % version_tuple[:2]
 
 setup(
-    name = "django-newletters",
+    name = "django-newsletters",
     version = version,
     description = "A newsletter application for django.",
     author = 'Marcos Daniel Petry',
